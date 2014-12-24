@@ -1,0 +1,12 @@
+schar = "_"
+nick = "dybot"
+server = "irc.subluminal.net:6667"
+autojoin = "#programming"
+
+[plugin]
+ping = true
+isup = true
+stock = true
+source = true
+moustachify = false
+
