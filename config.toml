@@ -8,5 +8,6 @@ ping = true
 isup = true
 stock = true
 source = true
+startups = true
 moustachify = false
 

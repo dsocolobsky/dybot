@@ -13,6 +13,7 @@ type Plugin struct {
 	isup bool
 	stock bool
 	source bool
+	startups bool
 	moustachify bool
 }
 
@@ -83,6 +84,11 @@ func handlers(e *irc.Event, con *irc.Connection, schar string) {
 		if plugin.source && checkcommand(cmd, "source") {
 			sendmsg(con, "http://github.com/dysoco/dybot")
 		}
+
+		if plugin.startups && checkcommand(cmd, "startups") {
+			log.Info("Startups has been called")
+			sendmsg(con, startups())
+		}
 	}
 
 	if plugin.moustachify && ispicture(msg) && isvalidhost(msg) {
@@ -102,6 +108,7 @@ func loadcfg(path string) {
 	plugin.isup = file.Get("plugin.isup").(bool)
 	plugin.stock = file.Get("plugin.stock").(bool)
 	plugin.source = file.Get("plugin.source").(bool)
+	plugin.startups = file.Get("plugin.startups").(bool)
 	plugin.moustachify = file.Get("plugin.moustachify").(bool)
 }
 
