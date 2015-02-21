@@ -4,15 +4,8 @@ import (
 	"errors"
 	log "github.com/cihub/seelog"
 	"net"
-	"regexp"
 	"strings"
 )
-
-func isvalidhost(host string) bool {
-	a, _ := regexp.MatchString("\\.[a-z]{2,}", host)
-
-	return a
-}
 
 func ping(host string) bool {
 	log.Debugf("Received %s", host)
@@ -29,9 +22,9 @@ func ping(host string) bool {
 		log.Debug("Has www")
 		host = strings.Trim(host, "www.")
 	}
-	
+
 	host = host + ":80"
-	
+
 	log.Infof("Pinging host %s", host)
 
 	_, err := net.Dial("tcp", host)

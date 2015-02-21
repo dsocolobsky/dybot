@@ -9,12 +9,13 @@ import (
 )
 
 type Plugin struct {
-	ping bool
-	isup bool
-	stock bool
-	source bool
-	startups bool
+	ping        bool
+	isup        bool
+	stock       bool
+	source      bool
+	startups    bool
 	moustachify bool
+	isnsfw      bool
 }
 
 type Config struct {
@@ -92,8 +93,21 @@ func handlers(e *irc.Event, con *irc.Connection, schar string) {
 	}
 
 	if plugin.moustachify && ispicture(msg) && isvalidhost(msg) {
-		sendmsg(con, "Moustachified! "+moustachify(msg))
+		sendmsg(con, "Moustachified! "+moustachify(extracturl(msg)))
 	}
+
+	if plugin.isnsfw && ispicture(msg) && isvalidhost(msg) {
+		nsfw, err := isnsfw(extracturl(msg))
+
+		if err == nil {
+			if nsfw {
+				sendmsg(con, "Seems to be NSFW!")
+			} else {
+				sendmsg(con, "Looks safe for work")
+			}
+		}
+	}
+
 }
 
 func loadcfg(path string) {
@@ -110,6 +124,7 @@ func loadcfg(path string) {
 	plugin.source = file.Get("plugin.source").(bool)
 	plugin.startups = file.Get("plugin.startups").(bool)
 	plugin.moustachify = file.Get("plugin.moustachify").(bool)
+	plugin.isnsfw = file.Get("plugin.isnsfw").(bool)
 }
 
 func main() {
