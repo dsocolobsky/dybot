@@ -3,12 +3,10 @@ package main
 import (
 	log "github.com/cihub/seelog"
 	"github.com/koyachi/go-nude"
-	//"io"
 	"io/ioutil"
 	"math/rand"
 	"net/http"
-	//"net/url"
-	//"os"
+	"os"
 )
 
 func randomstring() string {
@@ -57,6 +55,11 @@ func isnsfw(rawurl string) (bool, error) {
 	if err != nil {
 		log.Debug("Can't load image")
 		return false, err
+	}
+
+	err = os.Remove(filename)
+	if err != nil {
+		log.Debug("Failure during removal of image")
 	}
 
 	return nsfw, nil
