@@ -108,6 +108,16 @@ func handlers(e *irc.Event, con *irc.Connection, schar string) {
 		}
 	}
 
+	if isyear(msg) {
+		log.Debug("We got a year!")
+		sendmsg(con, promptyear(msg))
+	}
+
+	if isdate(msg) {
+		log.Debug("We got a date!")
+		sendmsg(con, promptdate(msg))
+	}
+
 }
 
 func loadcfg(path string) {

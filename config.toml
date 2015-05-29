@@ -1,7 +1,7 @@
 schar = "_"
 nick = "dybot"
 server = "irc.subluminal.net:6667"
-autojoin = "#programming"
+autojoin = "#dybot"
 
 [plugin]
 ping = true
